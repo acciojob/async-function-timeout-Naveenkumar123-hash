@@ -1,14 +1,30 @@
 //your JS code here. If required.
-const form = document.querySelector('form');
 const textInput = document.getElementById('text');
 const delayInput = document.getElementById('delay');
+const submitButton = document.getElementById('btn');
 const outputDiv = document.getElementById('output');
 
-async function showMessageAfterDelay() {
-  // Get the input values
-  const message = textInput.value;
-  const delayTime = parseInt(delayInput.value) * 1000; // Convert delay time to milliseconds
+// Define the async function
+async function showMessageWithDelay() {
+  // Get the text and delay values from the user inputs
+  const text = textInput.value;
+  const delay = parseInt(delayInput.value, 10);
 
+  // Validate the inputs
+  if (!text || isNaN(delay) || delay <= 0) {
+    outputDiv.innerText = 'Invalid input';
+    return;
+  }
+
+  // Wait for the specified delay
+  await new Promise(resolve => setTimeout(resolve, delay));
+
+  // Display the message on the webpage
+  outputDiv.innerText = text;
+}
+
+// Attach event listener to the submit button
+submitButton.addEventListener('click', showMessageWithDelay);
   // Wait for the specified time before getting the message
   await delay(delayTime);
 
